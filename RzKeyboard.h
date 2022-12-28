@@ -52,6 +52,21 @@ public:
 	bool keyboardUpdate();
 
 	// Render actually sets the data onto the devices.
+	// -----------------------------------------------------------------
+	// NOTE!!!!
+	// Treating a Razer device as something that can be rendered to
+	// at some arbtrary framerate will almost certainly not work.
+	//
+	// It is best to render _ONLY_ if you need to change keyboard state.
+	// 
+	// For animations, you can use the Razer SDK functionality for this.
+	// (This is not _yet_ implemented here)
+	// 
+	// OR create an animation by setting key values and rendering "realtime"
+	// Again, note that "realtime" is probably around 20 fps to a razer device!
+	// 
+	// You have been warned.
+	//--------------------------------------------------------------------------
 	bool keyboardRender();
 
 	// This is an "immediate mode" key color set.

@@ -211,6 +211,7 @@ bool RazerKeyboard::keyboardUpdate()
 	// 
 	// Source: http://developer.razerzone.com/chroma/razer-chroma-led-profiles/
 	// Take the super keyboard as standard, so your programm will work with every keyboard out of the box 
+	m_keyboardEffect = ChromaSDK::Keyboard::CUSTOM_EFFECT_TYPE();
 
 	m_keyboardEffect.Color[currentRow][currentCol] = BLUE;
 
