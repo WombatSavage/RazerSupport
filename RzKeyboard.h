@@ -48,8 +48,19 @@ public:
 	bool isDeviceConnected(RZDEVICEID DeviceId);
 	void ResetEffects(RazerDeviceType deviceType);
 
-	// Update creates the data to send down to the keyboard, etc.
-	bool keyboardUpdate();
+	// You can use this to grab the current array set on the keyboard
+	// and modify it.
+	ChromaSDK::Keyboard::CUSTOM_EFFECT_TYPE& getKeyboardEffect() 
+	{
+		return m_keyboardEffect;
+	};
+
+	// This function clears the array below to the passed in COLORREF value
+	// By default, this will just clear the keyboard to blank
+	bool keyboardClear(COLORREF keyColor = RGB(0,0,0));
+
+	// This will set the m_keyboardEffect to the keyboardEffect passed in
+	bool keyboardUpdate(const ChromaSDK::Keyboard::CUSTOM_EFFECT_TYPE& keyboardEffect);
 
 	// Render actually sets the data onto the devices.
 	// -----------------------------------------------------------------
@@ -72,6 +83,7 @@ public:
 	// This is an "immediate mode" key color set.
 	// ONLY call this after Render or Render will overwrite any changes
 	// that you make here!  And the next render call will overwrite these too!
+	// "Permanent Changes" are stored in the m_keyboardEffect below
 	bool forceKeycolor(ChromaSDK::Keyboard::RZKEY key, COLORREF keyColor);
 
 private:

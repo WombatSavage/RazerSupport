@@ -198,43 +198,28 @@ void RazerKeyboard::ResetEffects(RazerDeviceType deviceType)
 	}
 }
 
-size_t currentRow = 0;
-size_t currentCol = 0;
-byte currentClr = 252;
-bool countDn = true;
-
-bool RazerKeyboard::keyboardUpdate() 
+// The keyboard effect is initialized as a 2 dimensional matrix/array
+// rows start from zero -----BUT----- cols start from ONE (1)
+// So Esc at top left is [0][1]
+// 
+// Source: http://developer.razerzone.com/chroma/razer-chroma-led-profiles/
+// Take the super keyboard as standard, so your programm will work with every keyboard out of the box 
+bool RazerKeyboard::keyboardClear(COLORREF keyColor)
 {
-	// The keyboard effect is initialized as a 2 dimensional matrix/array
-	// rows start from zero -----BUT----- cols start from ONE (1)
-	// So Esc at top left is [0][1]
-	// 
-	// Source: http://developer.razerzone.com/chroma/razer-chroma-led-profiles/
-	// Take the super keyboard as standard, so your programm will work with every keyboard out of the box 
-	m_keyboardEffect = ChromaSDK::Keyboard::CUSTOM_EFFECT_TYPE();
-
-	m_keyboardEffect.Color[currentRow][currentCol] = BLUE;
-
-	currentCol++;
-	if(currentCol >= ChromaSDK::Keyboard::MAX_COLUMN)
-	{ 
-		currentCol = 0;
-		currentRow++;
-		if (currentRow >= ChromaSDK::Keyboard::MAX_ROW)
-			currentRow = 0;
+	for (int i = 0; i < ChromaSDK::Keyboard::MAX_ROW; i++)
+	{
+		for (int j = 1; j < ChromaSDK::Keyboard::MAX_COLUMN; j++)
+		{
+			m_keyboardEffect.Color[i][j] = keyColor;
+		}
 	}
 
-	COLORREF keyColor = RGB(currentClr, currentClr, currentClr);
-	m_keyboardEffect.Color[2][10] = keyColor;
-	if (countDn == true)
-		currentClr-=3;
-	else
-		currentClr+=3;
+	return true;
+}
 
-	if ((countDn == true) && (currentClr == 0))
-		countDn = false;
-	else if ((countDn == false) && (currentClr == 252))
-		countDn = true;
+bool RazerKeyboard::keyboardUpdate(const ChromaSDK::Keyboard::CUSTOM_EFFECT_TYPE& keyboardEffect)
+{
+	m_keyboardEffect = keyboardEffect;
 
 	return true;
 }
