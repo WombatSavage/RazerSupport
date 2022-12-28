@@ -1,0 +1,11 @@
+Debug
+Build
+x64
+ipch
+Shaders
+Audio
+packages
+.vs
+*.sdf
+*.vc.db
+*.opensdf
