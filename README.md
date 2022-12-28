@@ -1,0 +1,1 @@
+This is a library for programming the Razer family of gaming devices.  Basically a C++ wrapper around their SDK.
